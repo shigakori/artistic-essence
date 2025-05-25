@@ -1,0 +1,130 @@
+.preloader {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  background: var(--fg);
+  z-index: 99999;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.6s;
+}
+
+.preloader__center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.preloader__dots {
+  display: flex;
+  gap: clamp(0.5rem, 1vw, 0.7rem);
+  margin-bottom: clamp(1rem, 2vw, 1.5rem);
+}
+
+.preloader__dot {
+  width: clamp(20px, 3vw, 30px);
+  height: clamp(2px, 0.3vw, 3px);
+  border-radius: 13%;
+  border: 1px dotted #fff;
+  background: transparent;
+  opacity: 0.3;
+  transition: background 0.3s, opacity 0.3s, box-shadow 0.3s;
+}
+
+.preloader__dot--filled {
+  background: #fff;
+  opacity: 1;
+  box-shadow: 0 0 8px #fff8, 0 0 2px #fff;
+}
+
+.preloader__progress {
+  position: absolute;
+  bottom: clamp(2rem, 4vw, 3.5rem);
+  left: 0;
+  width: 100vw;
+  text-align: center;
+  color: #fff;
+  font-size: clamp(1rem, 1.5vw, 1.3rem);
+  letter-spacing: 0.15em;
+  opacity: 0.7;
+  font-family: 'Rader', 'Montserrat', Arial, sans-serif;
+}
+
+.preloader__enter-btn {
+  margin-top: clamp(1.5rem, 3vw, 2.5rem);
+  padding: clamp(0.6em, 1.5vw, 0.8em) clamp(1.5em, 3vw, 2.5em);
+  font-size: clamp(1rem, 1.3vw, 1.2rem);
+  font-family: 'Rader', 'Montserrat', Arial, sans-serif;
+  font-weight: 700;
+  border-radius: 2em;
+  border: none;
+  background: #fff;
+  color: #111;
+  cursor: pointer;
+  box-shadow: 0 2px 12px #0002;
+  letter-spacing: 0.1em;
+  transition: background 0.2s, color 0.2s;
+}
+
+.preloader__enter-btn:hover {
+  background: #222;
+  color: #fff;
+}
+
+@media (max-width: 768px) {
+  .preloader__center {
+    gap: 1.2rem;
+  }
+  
+  .preloader__dots {
+    gap: 0.3rem;
+    margin-bottom: 0.8rem;
+  }
+  
+  .preloader__dot {
+    width: 15px;
+    height: 1.5px;
+  }
+  
+  .preloader__progress {
+    bottom: 1.8rem;
+    font-size: 0.9rem;
+  }
+  
+  .preloader__enter-btn {
+    margin-top: 1.2rem;
+    padding: 0.5em 1.8em;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .preloader__center {
+    gap: 1rem;
+  }
+  
+  .preloader__dots {
+    gap: 0.2rem;
+    margin-bottom: 0.6rem;
+  }
+  
+  .preloader__dot {
+    width: 12px;
+    height: 1px;
+  }
+  
+  .preloader__progress {
+    bottom: 1.5rem;
+    font-size: 0.85rem;
+  }
+  
+  .preloader__enter-btn {
+    margin-top: 1rem;
+    padding: 0.4em 1.5em;
+    font-size: 0.85rem;
+  }
+} 

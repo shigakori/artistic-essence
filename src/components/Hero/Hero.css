@@ -1,0 +1,212 @@
+.hero-section {
+    position: relative;
+    min-height: 80vh;
+    border-radius: 2em;
+    overflow: hidden;
+    margin: 8em auto 2em auto;
+    display: flex;
+    align-items: start;
+    justify-content: center;
+}
+
+.hero-section__bg {
+    position: absolute;
+    inset: 0;
+    background: url('/work/work-5.jpg') center/cover no-repeat;
+    transform: scale(1.2);
+    z-index: 1;
+    background-color: transparent;
+}
+
+.hero-section__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(20, 23, 22, 0.6);
+    z-index: 2;
+}
+
+.hero-section__steam {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 3;
+}
+
+.steam-wave {
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    left: 0;
+    top: 0;
+    border-radius: 50%;
+    background: radial-gradient(ellipse at center, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.06) 60%, rgba(255,255,255,0.01) 100%);
+    pointer-events: none;
+    filter: blur(12px);
+    opacity: 0;
+    mix-blend-mode: lighten;
+    will-change: transform, opacity;
+    transition: opacity 0.4s;
+}
+
+.hero-section__content {
+    position: relative;
+    z-index: 4;
+    color: #fff;
+    text-align: center;
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 8em 2em 4em 2em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    min-height: 60vh;
+}
+
+.hero-section__label {
+    font-size: 1.1em;
+    letter-spacing: 0.2em;
+    margin-bottom: 1.2em;
+    opacity: 0.85;
+    background: rgba(0,0,0,0.25);
+    padding: 0.3em 1.2em;
+    border-radius: 1em;
+    font-weight: 600;
+}
+
+.hero-section__title {
+    font-size: 4vw;
+    font-weight: 100;
+    margin-bottom: 1.5em;
+    line-height: 1.1;
+}
+
+.hero-section__title em {
+    font-style: italic;
+    font-weight: 400;
+    opacity: 0.8;
+}
+
+.hero-section__title-text {
+    display: inline;
+}
+
+.hero-section__title-emphasis {
+    font-style: italic;
+    font-weight: 400;
+    opacity: 0.8;
+    display: inline;
+}
+
+/* Модификаторы */
+.hero-section--fullscreen {
+    min-height: 100vh;
+}
+
+.hero-section--dark .hero-section__overlay {
+    background: rgba(0, 0, 0, 0.8);
+}
+
+.hero-section--light .hero-section__overlay {
+    background: rgba(255, 255, 255, 0.6);
+}
+
+.hero-section__label--active {
+    opacity: 1;
+    background: rgba(0,0,0,0.5);
+}
+
+@media (max-width: 768px) {
+    .hero-section {
+        margin: 4em auto 1em auto;
+        margin-top: 7em;
+    }
+
+    .hero-section__title {
+        font-size: 6vw;
+    }
+
+    .hero-section__content {
+        padding: 4em 1em 2em 1em;
+        justify-content: center;
+    }
+}
+
+.hero-section__btn {
+    position: relative;
+    display: inline-block;
+    padding: 0;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    border-radius: 2em;
+    overflow: hidden;
+    min-width: 240px;
+    height: 3.2em;
+    margin-top: 2em;
+    box-shadow: none;
+}
+
+.hero-section__btn-text,
+.hero-section__btn-text--clone {
+    display: block;
+    width: 100%;
+    height: 100%;
+    font-size: 1.7em;
+    letter-spacing: 0.1em;
+    text-align: center;
+    color: #222;
+    position: absolute;
+    left: 0; right: 0;
+    top: 0;
+    line-height: 2.2em;
+    transition: transform 0.37s cubic-bezier(0.65,0,0.35,1), color 0.25s;
+    z-index: 2;
+    background: transparent;
+    pointer-events: none;
+    font-family: var(--rader);
+}
+
+.hero-section__btn-text {
+    color: #ececec;
+    letter-spacing: .1px;
+    font-weight: 100;
+}
+
+.hero-section__btn-text--clone {
+    color: #222;
+    transform: translateY(100%);
+    z-index: 3;
+    letter-spacing: 2px;
+    font-weight: 600;
+}
+
+.hero-section__btn::before {
+    content: '';
+    position: absolute;
+    left: 0; right: 0;
+    bottom: 0;
+    height: 100%;
+    background: #fff;
+    z-index: 1;
+    border-radius: 2em;
+    transform: translateY(100%);
+    transition: transform 0.37s cubic-bezier(0.65,0,0.35,1);
+}
+
+.hero-section__btn {
+    background: #000;
+}
+
+.hero-section__btn:hover .hero-section__btn-text {
+    transform: translateY(-100%);
+}
+
+.hero-section__btn:hover .hero-section__btn-text--clone {
+    transform: translateY(0);
+}
+
+.hero-section__btn:hover::before {
+    transform: translateY(0);
+}

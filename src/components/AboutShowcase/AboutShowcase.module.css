@@ -1,0 +1,136 @@
+.aboutSection {
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    border: 1px dashed var(--fg200);
+    border-radius: 20px;
+    padding: 2vw 2vw 2vw 2vw;
+    background: var(--bg);
+    gap: 1vw;
+    margin: 2vw 0;
+    max-width: 1850px;
+    width: 100%;
+    margin: 0 auto;
+  }
+  
+  .left {
+    flex: 1.2;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-right: 2vw;
+  }
+  
+  .title {
+    font-family: var(--rader);
+    font-size: 2.2vw;
+    font-weight: 600;
+    line-height: 1.1;
+    margin-bottom: 2vw;
+    text-transform: uppercase;
+  }
+  
+  .rows {
+    display: flex;
+    flex-direction: column;
+    gap: 2vw;
+  }
+  
+  .row {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    border-top: 1px dashed var(--fg200);
+    padding-top: 1vw;
+    gap: 2vw;
+  }
+  
+  .label {
+    min-width: 180px;
+    font-family: var(--rader);
+    font-size: 1.1vw;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+  }
+  
+  .desc {
+    font-family: var(--messina);
+    font-size: 1vw;
+    font-weight: 600;
+    color: var(--fg200);
+  }
+  
+  .right {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+  
+  .imageWrapper {
+    position: relative;
+    width: 100%;
+    max-width: 680px;
+    height: 100%;
+    aspect-ratio: 4/3;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 32px rgba(0,0,0,0.08);
+    background: var(--bg200);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: brightness(.8);
+  }
+  
+  .overlayText {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-family: "Messina Sans Mono";
+    font-size: 1.1vw;
+    color: #fff;
+    background: rgba(0,0,0,0.32);
+    padding: 0.5em 1.2em;
+    border-radius: 8px;
+    letter-spacing: 0.04em;
+    pointer-events: none;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.18);
+  }
+  
+  @media (max-width: 900px) {
+    .aboutSection {
+      flex-direction: column;
+      padding: 4vw 2vw;
+      gap: 4vw;
+    }
+    .left {
+      padding-right: 0;
+    }
+    .title {
+      font-size: 5vw;
+    }
+    .label {
+      font-size: 2.5vw;
+      min-width: 120px;
+    }
+    .desc {
+      font-size: 2vw;
+    }
+    .imageWrapper {
+      max-width: 100%;
+      aspect-ratio: 4/3;
+    }
+    .overlayText {
+      font-size: 2.5vw;
+    }
+  }

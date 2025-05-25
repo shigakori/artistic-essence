@@ -1,0 +1,40 @@
+.cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: difference;
+}
+
+.cursor__circle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+}
+
+.cursor__circle--small {
+  width: 6px;
+  height: 6px;
+  background: #fff;
+  mix-blend-mode: difference;
+  transition: opacity 0.15s ease;
+}
+
+.cursor__circle--large {
+  width: 38px;
+  height: 38px;
+  border: 1px solid #fff;
+  mix-blend-mode: difference;
+  transition: opacity 0.15s ease;
+}
+
+.cursor-hide {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transition: opacity 0.2s;
+}

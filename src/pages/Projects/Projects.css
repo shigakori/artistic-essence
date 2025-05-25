@@ -1,0 +1,214 @@
+.projects__intro {
+    max-width: 1400px;
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5vw;
+    z-index: 2;
+    padding: 20px;
+}
+
+.projects__title.big-right {
+    text-align: right;
+    align-self: flex-end;
+    font-family: var(--rader);
+    font-size: clamp(2.5rem, 3.5vw, 4rem);
+    font-weight: 800;
+    color: var(--fg);
+    opacity: 1;
+    text-transform: uppercase;
+    max-width: 100%;
+}
+
+.big-left {
+    text-align: left;
+    align-self: flex-start;
+    font-size: clamp(1rem, 3vw, 2.5rem);
+    font-weight: 600;
+    font-family: var(--rader);
+    color: var(--fg200);
+    letter-spacing: 0.01em;
+    line-height: 1.1;
+    opacity: 1;
+    margin-bottom: 4rem;
+    max-width: 100%;
+}
+
+.projects__desc {
+    font-family: var(--rader);
+    font-size: clamp(1rem, 1.5vw, 1.5rem);
+    color: #222;
+    margin-bottom: 1.2rem;
+    opacity: 1;
+    transform: translateY(40px);
+    font-weight: 400;
+    max-width: 60%;
+}
+
+.projects__carousel {
+    position: relative;
+    height: 100vh;
+    width: 98%;
+    margin: 0 auto;
+    margin-bottom: .5rem;
+    border-radius: 37px;
+    border: 2px solid var(--fg);
+    overflow: hidden;
+    background-color: var(--fg);
+}
+
+.projects__slider {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.projects__slider img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(.3);
+}
+
+.projects__preview {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 2em;
+    width: 75%;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    gap: 1em;
+    z-index: 2;
+}
+
+.projects__item {
+    height: 100%;
+    aspect-ratio: 16/9;
+    border: 1px dashed var(--fg);
+    border-radius: 0.5em;
+    overflow: hidden;
+    cursor: pointer;
+    transition: border .3s ease-in-out, filter .3s ease-in-out, transform .3s ease-in-out;
+}
+
+.projects__item:hover {
+    border: 1px dashed var(--bg);
+    filter: brightness(1.5);
+}
+
+.projects__item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(.5);
+    transition: transform .3s ease-in-out;
+}
+.projects__item img:hover {
+    transform: scale(1.2);
+}
+
+.projects__item--active {
+    border: 1px dashed var(--bg);
+    filter: brightness(2);
+    transform: scale(1.05);
+}
+
+.projects__info {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1em;
+    width: 100%;
+    padding: 1.25em;
+    z-index: 2;
+}
+
+.projects__description,
+.projects__title {
+    position: relative;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+    width: 100%;
+}
+
+.projects__title h1 {
+    line-height: 1;
+    font-size: 3rem;
+    font-weight: 500;
+    margin: 0;
+}
+
+.projects__description p {
+    font-size: 1.2rem;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.projects__title h1,
+.projects__description p {
+    position: relative;
+    display: block;
+    will-change: transform;
+    color: var(--bg);
+    text-align: center;
+}
+
+.projects__title-container {
+    cursor: pointer;
+}
+
+@media (max-width: 1200px) {
+    .projects__intro {
+        max-width: 1200px;
+        padding: 15px;
+    }
+    
+    .projects__desc {
+        max-width: 70%;
+    }
+}
+
+@media (max-width: 900px) {
+    .projects__intro {
+        max-width: 900px;
+        padding: 10px;
+    }
+    
+    .projects__title.big-right,
+    .big-left {
+        text-align: center;
+        align-self: center;
+        max-width: 80%;
+    }
+    
+    .projects__desc {
+        max-width: 80%;
+        text-align: center;
+    }
+}
+
+@media (max-width: 600px) {
+    .projects__intro {
+        max-width: 100%;
+        padding: 10px;
+    }
+    
+    .projects__title.big-right,
+    .big-left {
+        max-width: 100%;
+    }
+    
+    .projects__desc {
+        max-width: 100%;
+    }
+}
+  

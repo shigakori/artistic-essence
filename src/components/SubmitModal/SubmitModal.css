@@ -1,0 +1,94 @@
+.submit-modal__overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.submit-modal__window {
+  position: relative;
+  background: var(--bg);
+  padding: 2em;
+  border-radius: 1em;
+  width: 90%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.submit-modal__close {
+  position: absolute;
+  top: 1em;
+  right: 1em;
+  background: none;
+  border: none;
+  font-size: 1.5em;
+  cursor: pointer;
+  color: var(--fg);
+}
+
+.submit-modal__title {
+  font-size: 1.8em;
+  margin-bottom: 1em;
+  color: var(--fg);
+}
+
+.submit-modal__form {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.submit-modal__form label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  color: var(--fg);
+}
+
+.submit-modal__form input,
+.submit-modal__form textarea {
+  padding: 0.8em;
+  border: 1px solid var(--fg);
+  border-radius: 0.5em;
+  background: transparent;
+  color: var(--fg);
+}
+
+.submit-modal__form textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.submit-modal__btn {
+  margin-top: 1em;
+  padding: 1em;
+  background: var(--fg);
+  color: var(--bg);
+  border: none;
+  border-radius: 0.5em;
+  cursor: pointer;
+  font-size: 1.1em;
+  transition: transform 0.2s;
+}
+
+.submit-modal__btn:hover {
+  transform: translateY(-2px);
+}
+
+.submit-modal__toast {
+  position: fixed;
+  bottom: 2em;
+  right: 2em;
+  background: var(--fg);
+  color: var(--bg);
+  padding: 1em 2em;
+  border-radius: 0.5em;
+  font-size: 1.1em;
+} 

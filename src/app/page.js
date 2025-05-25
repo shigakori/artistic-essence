@@ -1,20 +1,19 @@
 "use client";
 
-import "./App.css";
 import { usePathname } from "next/navigation";
 import React, { useEffect } from "react";
-
-import Menu from "@/components/Menu/Menu";
 import { AnimatePresence } from "framer-motion";
 import Home from "@/pages/Home/Home";
+import About from "@/pages/About/About";
+import Projects from "@/pages/Projects/Projects";
+import Contacts from "@/pages/Contacts/Contacts";
+import Footer from "@/components/Footer/Footer";
 
 function ScrollToTop() {
     const pathname = usePathname();
 
     useEffect(() => {
-        setTimeout(() => {
-            window.scrollTo(0, 0);
-        }, 1400);
+        window.scrollTo(0, 0);
     }, [pathname]);
 
     return null;
@@ -24,14 +23,18 @@ function App() {
     const pathname = usePathname();
 
     return (
-        <>
+        <div className="app-container">
             <ScrollToTop />
-            <Menu pathname={pathname} /> {/* Передаём строку как пропс */}
-            <AnimatePresence mode="wait" initial={false}>
-                {pathname === "/" && <Home />}
-                {/* Добавь другие страницы, если нужны */}
-            </AnimatePresence>
-        </>
+            <main className="main-content">
+                    <AnimatePresence mode="wait" initial={false}>
+                        {pathname === "/" && <Home key="home" />}
+                        {pathname === "/about" && <About key="about" />}
+                        {pathname === "/projects" && <Projects key="projects" />}
+                        {pathname === "/contacts" && <Contacts key="contacts" />}
+                    </AnimatePresence>
+            </main>
+            <Footer />
+        </div>
     );
 }
 

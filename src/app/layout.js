@@ -1,22 +1,31 @@
-import { Suspense } from "react";
-import ProgressBar from "@/components/ProgressBar/ProgressBar";
-
 import "./globals.css";
+import AppShell from "@/components/AppShell/AppShell";
+import { PageTransitionProvider } from "@/components/PageTransition/PageTransition";
 
 export const metadata = {
-  title: "Horizon AI | The future Of Artificial Intelligence",
-  description: "The Future Of AI",
+  title: "Artistic Essence",
+  description: "The Art Of Painting",
+  keywords: "art, painting, gallery, artist, portfolio",
+  openGraph: {
+    title: "Artistic Essence",
+    description: "The Art Of Painting",
+    type: "website",
+  }
 };
 
 export default function RootLayout({ children }) {
   return (
-      <html lang="en">
+    <html lang="en">
+      <head>
+        <link rel="icon" href="/favicon.ico?v=3" />
+        <link rel="shortcut icon" href="/favicon.ico?v=3" />
+        <link rel="apple-touch-icon" href="/favicon.ico?v=3" />
+      </head>
       <body>
-      <Suspense>
-        <ProgressBar />
-      </Suspense>
-      {children}
+        <PageTransitionProvider>
+          <AppShell>{children}</AppShell>
+        </PageTransitionProvider>
       </body>
-      </html>
+    </html>
   );
 }
