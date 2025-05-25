@@ -6,15 +6,15 @@ import gsap from 'gsap';
 const getImageByPath = (pathname) => {
     switch (pathname) {
         case '/':
-            return '/work/work-5.jpg';
+            return '/artistic-essence/work/work-5.jpg';
         case '/about':
-            return '/work/work-3.jpg';
+            return '/artistic-essence/work/work-3.jpg';
         case '/projects':
-            return '/work/work-8.jpg';
+            return '/artistic-essence/work/work-8.jpg';
         case '/contacts':
-            return '/work/work-4.jpg';
+            return '/artistic-essence/work/work-4.jpg';
         default:
-            return '/work/work-5.jpg';
+            return '/artistic-essence/work/work-5.jpg';
     }
 };
 

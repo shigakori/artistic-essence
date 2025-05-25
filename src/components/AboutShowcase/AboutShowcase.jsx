@@ -32,7 +32,7 @@ export default function AboutShowcase() {
       <div className={styles.right}>
         <div className={styles.imageWrapper}>
           <ParallaxImg
-            src="/work/work-9.jpg"
+            src="/artistic-essence/work/work-9.jpg"
             alt="Filmmaking"
             className={styles.image}
           />

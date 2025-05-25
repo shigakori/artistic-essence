@@ -161,7 +161,7 @@ const Projects = () => {
                     emphasis: "Latest",
                     last: "Works"
                 }}
-                backgroundImage="/work/work-8.jpg"
+                backgroundImage="/artistic-essence/work/work-8.jpg"
             />
 
             <div className='projects__intro'>

@@ -17,7 +17,7 @@ const About = () => {
                     emphasis: "Creative",
                     last: "Journey"
                 }}
-                backgroundImage="/work/work-3.jpg"
+                backgroundImage="/artistic-essence/work/work-3.jpg"
             />
 
             <AboutShowcase />

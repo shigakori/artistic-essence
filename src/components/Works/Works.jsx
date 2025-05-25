@@ -36,7 +36,7 @@ export default function Works() {
                 imgContainer.id = `img-${i + 1}`; 
     
                 const img = document.createElement('img');
-                img.src = works[i].image; 
+                img.src = works[i].image;
                 img.alt = works[i].title;
                 img.loading = 'lazy';
                 img.style.transform = "scale(1.25)";

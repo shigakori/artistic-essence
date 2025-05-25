@@ -12,7 +12,7 @@
 .hero-section__bg {
     position: absolute;
     inset: 0;
-    background: url('/work/work-5.jpg') center/cover no-repeat;
+    background: url('/artistic-essence/work/work-5.jpg') center/cover no-repeat;
     transform: scale(1.2);
     z-index: 1;
     background-color: transparent;

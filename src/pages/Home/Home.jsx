@@ -23,7 +23,7 @@ const Home = () => {
                     emphasis: "Art of",
                     last: "Painting"
                 }}
-                backgroundImage="/work/work-5.jpg"
+                backgroundImage="/artistic-essence/work/work-5.jpg"
             />
             <Beauty />
             <Works />

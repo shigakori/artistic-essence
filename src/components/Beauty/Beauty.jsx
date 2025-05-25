@@ -74,7 +74,7 @@ const Beauty = () => {
         <section className="container beauty" ref={sectionRef}>
             <div className="beauty__img" ref={img2Ref}>
                 <ParallaxImg
-                    src="/work/work-8.jpg"
+                    src="/artistic-essence/work/work-8.jpg"
                     alt="Artistic Essence Gallery Preview"
                     className="beauty__pin-img"
                     scale={1.7}

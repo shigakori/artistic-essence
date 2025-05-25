@@ -16,7 +16,7 @@ const Contacts = () => {
                     emphasis: "Touch",
                     last: "With Us"
                 }}
-                backgroundImage="/work/work-4.jpg"
+                backgroundImage="/artistic-essence/work/work-4.jpg"
             />
 
             <ContactForm />

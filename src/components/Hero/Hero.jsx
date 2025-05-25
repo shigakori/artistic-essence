@@ -11,7 +11,7 @@ const Hero = ({
         emphasis: 'Art of',
         last: 'Painting'
     },
-    backgroundImage = '/work/work-1.jpg'
+    backgroundImage = '/artistic-essence/work/work-1.jpg'
 }) => {
     return (
         <section className="container hero-section" translate="no">
