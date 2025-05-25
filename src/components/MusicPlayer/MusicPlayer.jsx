@@ -31,7 +31,7 @@ const MusicToggle = () => {
     lottieRef.current = animation;
 
     if (typeof window !== "undefined") {
-      audioRef.current = new Audio("/relax.mp3");
+      audioRef.current = new Audio("/artistic-essence/relax.mp3");
     }
 
     return () => {
