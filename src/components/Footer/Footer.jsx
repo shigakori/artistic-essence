@@ -181,7 +181,6 @@ const Footer = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            // ... код отправки формы ...
             setShowSuccess(true);
             setTimeout(() => {
                 setShowSuccess(false);

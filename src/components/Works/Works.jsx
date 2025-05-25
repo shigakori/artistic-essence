@@ -15,7 +15,7 @@ export default function Works() {
     const slideImages = useRef(null);
     const titleElement = useRef(null);
     const exploreLink = useRef(null);
-    let firstSlideDOMElement = null; // Для хранения ссылки на DOM-элемент первого слайда
+    let firstSlideDOMElement = null; 
 
     useEffect(() => {
         const totalWorks = works.length;
@@ -27,28 +27,24 @@ export default function Works() {
         
         if (!slideImages.current) return;
         
-        // Безопасно очищаем контейнер
         slideImages.current.innerHTML = "";
 
         for (let i = 0; i < totalWorks; i++) {
             if (i === 0) {
-                // Создаем первый слайд (без strips)
                 const imgContainer = document.createElement('div');
-                imgContainer.className = 'img'; // Используем класс 'img'
-                imgContainer.id = `img-${i + 1}`; // id будет 'img-1'
+                imgContainer.className = 'img'; 
+                imgContainer.id = `img-${i + 1}`; 
     
                 const img = document.createElement('img');
-                img.src = works[i].image; // Используем slides[0].image
+                img.src = works[i].image; 
                 img.alt = works[i].title;
                 img.loading = 'lazy';
-                // Стили для первого изображения
                 img.style.transform = "scale(1.25)";
     
                 imgContainer.appendChild(img);
                 slideImages.current.appendChild(imgContainer);
-                firstSlideDOMElement = img; // Сохраняем ссылку на сам <img> тег
+                firstSlideDOMElement = img; 
             } else {
-                // Создаем остальные слайды (со strips)
                 const imgContainer = document.createElement('div');
                 imgContainer.className = 'img-container';
                 imgContainer.id = `img-container-${i + 1}`;
@@ -316,7 +312,6 @@ export default function Works() {
             }
         });
 
-        // В конце useEffect:
         return () => {
             ScrollTrigger.getAll().forEach(trigger => trigger.kill());
         };

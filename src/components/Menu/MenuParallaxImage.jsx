@@ -63,7 +63,6 @@ const MenuParallaxImage = () => {
             requestAnimationFrame(animate);
         };
 
-        // Анимация появления
         gsap.fromTo(containerRef.current,
             {
                 opacity: 0,

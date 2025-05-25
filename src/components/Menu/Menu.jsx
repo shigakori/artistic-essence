@@ -1,7 +1,7 @@
 "use client"
 import React, { useEffect, useRef, useState} from 'react';
 import "./Menu.css";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 import {gsap} from 'gsap';
 import ScrambleText from '../ScrambleText/ScrambleText';

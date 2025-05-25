@@ -8,7 +8,17 @@ import './PageTransition.css';
 export const PageTransitionContext = createContext();
 
 export function usePageTransition() {
-  return useContext(PageTransitionContext);
+  const context = useContext(PageTransitionContext);
+  if (!context) {
+    return {
+      phase: 'idle',
+      startClosing: () => {},
+      handleClosed: () => {},
+      handleOpened: () => {},
+      hasNavigated: false,
+    };
+  }
+  return context;
 }
 
 export function PageTransitionProvider({ children }) {
@@ -21,7 +31,6 @@ export function PageTransitionProvider({ children }) {
   const pathname = usePathname();
   const prevPathRef = useRef(pathname);
 
-  // Запуск анимации закрытия и перехода
   const startClosing = (nextPath, callback) => {
     setPendingPath(nextPath);
     callbackRef.current = callback;
@@ -29,7 +38,6 @@ export function PageTransitionProvider({ children }) {
     setPhase('closing');
   };
 
-  // После закрытия — переход
   const handleClosed = () => {
     if (pendingPath) {
       router.push(pendingPath);
@@ -42,13 +50,11 @@ export function PageTransitionProvider({ children }) {
     setPhase('opening');
   };
 
-  // После открытия — idle
   const handleOpened = () => {
     setPhase('idle');
     setHasNavigated(false);
   };
 
-  // Отслеживаем изменения пути
   useEffect(() => {
     if (isFirstLoad.current) {
       isFirstLoad.current = false;
@@ -87,7 +93,6 @@ export function PageTransitionBlocks() {
       const ROWS = 8;
       const COLS = 8;
       
-      // Создаем более хаотичные задержки
       randomDelays.current = Array.from({ length: ROWS }, () =>
         Array.from({ length: COLS }, () => Math.random() * 0.8)
       );

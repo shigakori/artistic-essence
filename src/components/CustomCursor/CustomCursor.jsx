@@ -14,18 +14,15 @@ const CustomCursor = () => {
   const [isTouch, setIsTouch] = useState(false);
 
   useEffect(() => {
-    // Проверяем, является ли устройство тач-устройством
     const browser = Bowser.getParser(window.navigator.userAgent);
     const isMobile = ['tablet', 'mobile'].includes(browser.getPlatformType());
     const hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
-    // Если мобильное или touch — сразу скрываем курсор
     if (isMobile || hasTouch) {
       setIsTouch(true);
       return;
     }
 
-    // Если не touch — слушаем touchstart на случай эмуляции или гибридных устройств
     const handleFirstTouch = () => {
       setIsTouch(true);
     };
@@ -139,10 +136,8 @@ const CustomCursor = () => {
       });
     };
 
-    // Добавляем начальные обработчики
     addEventListeners();
 
-    // Создаем MutationObserver для отслеживания изменений в DOM
     const observer = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
         if (mutation.type === 'childList' || mutation.type === 'attributes') {

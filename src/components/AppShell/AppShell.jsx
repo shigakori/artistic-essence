@@ -13,7 +13,6 @@ export default function AppShell({ children }) {
   const { phase } = usePageTransition();
 
   useEffect(() => {
-    // Показываем прелоадер только при первой загрузке вкладки
     if (typeof window !== 'undefined') {
       if (window.sessionStorage.getItem('preloaderShown')) {
         setShowPreloader(false);
@@ -23,7 +22,6 @@ export default function AppShell({ children }) {
     }
   }, []);
 
-  // Скрываем скроллбары во время анимации перехода
   useEffect(() => {
     if (phase !== 'idle') {
       document.body.style.overflow = 'hidden';

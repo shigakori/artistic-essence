@@ -20,7 +20,6 @@ export const NotificationProvider = ({ children }) => {
         const id = Date.now();
         setNotifications(prev => [...prev, { id, message, type }]);
         
-        // Автоматически удаляем уведомление через 5 секунд
         setTimeout(() => {
             removeNotification(id);
         }, 5000);

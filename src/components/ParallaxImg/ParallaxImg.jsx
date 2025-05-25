@@ -56,7 +56,6 @@ const ParallaxImg = ({ src, alt, className, style, scale = 1.7 }) => {
         targetTranslateY.current = relativeScroll * 0.2
     });
 
-    // Mouse parallax по всему экрану
     useEffect(() => {
         const handleMouseMove = (e) => {
             const w = window.innerWidth;

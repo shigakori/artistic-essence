@@ -17,7 +17,6 @@ const Beauty = () => {
         const stickySection = sectionRef.current;
         const totalStickyHeight = window.innerHeight * 1.2;
 
-        // pin секция
         ScrollTrigger.create({
             trigger: stickySection,
             start: 'top top',
@@ -26,7 +25,6 @@ const Beauty = () => {
             pinSpacing: true,
         });
 
-        // scale img-2
         gsap.to(img2ImgRef.current, {
             scale: 1.125,
             ease: "none",
@@ -38,7 +36,6 @@ const Beauty = () => {
             }
         });
 
-        // clip-path img-2
         gsap.to(img2Ref.current, {
             clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)',
             ease: "none",
@@ -61,7 +58,6 @@ const Beauty = () => {
             }
         });
 
-        // Анимация появления с разных сторон
         gsap.to('.big-left', {opacity: 1, x: 0, y: 0, duration: 1, ease: 'power3.out', delay: 0.3});
         gsap.to('.big-right', {opacity: 1, x: 0, y: 0, duration: 1, ease: 'power3.out', delay: 0.6});
         gsap.to('.beauty__desc', {opacity: 1, y: 0, duration: 1, ease: 'power3.out', delay: 0.9});
