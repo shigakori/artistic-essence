@@ -19,7 +19,6 @@ export default function Works() {
     let firstSlideDOMElement = null;
 
     useEffect(() => {
-        // Проверяем, является ли устройство мобильным
         const checkMobile = () => {
             return window.innerWidth <= 768;
         };
@@ -42,7 +41,6 @@ export default function Works() {
             if (!slideImages.current) return;
 
             const totalWorks = works.length;
-            // Уменьшаем количество полос для мобильных устройств
             const stripsCount = isMobile ? 8 : 16;
             let currentTitleIndex = 0;
             let queuedTitleIndex = null;
@@ -51,7 +49,6 @@ export default function Works() {
             
             slideImages.current.innerHTML = "";
 
-            // Создаем первый слайд
             if (totalWorks > 0) {
                 const imgContainer = document.createElement('div');
                 imgContainer.className = 'img';
@@ -68,7 +65,6 @@ export default function Works() {
                 firstSlideDOMElement = img;
             }
 
-            // Создаем остальные слайды
             for (let i = 1; i < totalWorks; i++) {
                 const imgContainer = document.createElement('div');
                 imgContainer.className = 'img-container';
@@ -97,11 +93,10 @@ export default function Works() {
                 slideImages.current.appendChild(imgContainer);
             }
 
-            // Оптимизируем параметры скролла для мобильных устройств
             const transitionCount = totalWorks - 1;
-            const scrollDistancePerTransition = isMobile ? 500 : 1000;
-            const initialScrollDelay = isMobile ? 150 : 300;
-            const finalScrollDelay = isMobile ? 150 : 300;
+            const scrollDistancePerTransition = isMobile ? 300 : 800;
+            const initialScrollDelay = isMobile ? 100 : 200;
+            const finalScrollDelay = isMobile ? 100 : 200;
 
             const totalScrollDistance = transitionCount * scrollDistancePerTransition + initialScrollDelay + finalScrollDelay;
 
@@ -243,10 +238,17 @@ export default function Works() {
                     end: `+=${totalScrollDistance}vh`,
                     pin: true,
                     pinSpacing: true,
-                    scrub: isMobile ? 1 : 0.5,
+                    scrub: isMobile ? 0.5 : 0.3,
                     invalidateOnRefresh: true,
                     anticipatePin: 1,
                     fastScrollEnd: true,
+                    preventOverlaps: true,
+                    onEnter: () => {
+                        gsap.set(slideImages.current, { clearProps: "all" });
+                    },
+                    onLeaveBack: () => {
+                        gsap.set(slideImages.current, { clearProps: "all" });
+                    },
                     onUpdate: (self) => {
                         try {
                             const imageProgress = calculateImageProgress(self.progress);
@@ -285,7 +287,9 @@ export default function Works() {
                                             const stripPositionFromBottom = stripsCount - stripIndex - 1;
                                             const stripUpperBound = stripPositionFromBottom * (100 / stripsCount);
                                             const stripLowerBound = (stripPositionFromBottom + 1) * (100 / stripsCount);
-                                            strip.style.clipPath = `polygon(0% ${stripLowerBound}%, 100% ${stripLowerBound}%, 100% ${stripUpperBound - .1}%, 0% ${stripUpperBound - .1}%)`;
+                                            gsap.set(strip, {
+                                                clipPath: `polygon(0% ${stripLowerBound}%, 100% ${stripLowerBound}%, 100% ${stripUpperBound - .1}%, 0% ${stripUpperBound - .1}%)`
+                                            });
                                         });
                                     } else if (i === currentImageIndex) {
                                         strips.forEach((strip, stripIndex) => {
@@ -295,19 +299,23 @@ export default function Works() {
                                             const stripDelay = (stripIndex / stripsCount) * (isMobile ? 0.3 : 0.5);
                                             const adjustedProgress = Math.max(0, Math.min(1, (imageSpecificProgress - stripDelay) * 2));
                                             const currentStripUpperBound = stripLowerBound - (stripLowerBound - (stripUpperBound - .1)) * adjustedProgress;
-                                            strip.style.clipPath = `polygon(0% ${stripLowerBound}%, 100% ${stripLowerBound}%, 100% ${currentStripUpperBound}%, 0% ${currentStripUpperBound}%)`;
+                                            gsap.set(strip, {
+                                                clipPath: `polygon(0% ${stripLowerBound}%, 100% ${stripLowerBound}%, 100% ${currentStripUpperBound}%, 0% ${currentStripUpperBound}%)`
+                                            });
                                         });
                                     } else {
                                         strips.forEach((strip, stripIndex) => {
                                             const stripPositionFromBottom = stripsCount - stripIndex - 1;
                                             const stripLowerBound = (stripPositionFromBottom + 1) * (100 / stripsCount);
-                                            strip.style.clipPath = `polygon(0% ${stripLowerBound}%, 100% ${stripLowerBound}%, 100% ${stripLowerBound}%, 0% ${stripLowerBound}%)`;
+                                            gsap.set(strip, {
+                                                clipPath: `polygon(0% ${stripLowerBound}%, 100% ${stripLowerBound}%, 100% ${stripLowerBound}%, 0% ${stripLowerBound}%)`
+                                            });
                                         });
                                     }
 
                                     const imgScale = getScaleForImage(i - 1, currentImageIndex, imageSpecificProgress);
                                     images.forEach((img) => {
-                                        img.style.transform = `scale(${imgScale})`;
+                                        gsap.set(img, { transform: `scale(${imgScale})` });
                                     });
                                 }
 

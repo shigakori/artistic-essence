@@ -23,6 +23,9 @@ const Beauty = () => {
             end: () => `+=${totalStickyHeight}`,
             pin: true,
             pinSpacing: true,
+            anticipatePin: 1,
+            fastScrollEnd: true,
+            invalidateOnRefresh: true
         });
 
         gsap.to(img2ImgRef.current, {
