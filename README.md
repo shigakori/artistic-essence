@@ -1,36 +1,94 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Artistic Essence
 
-## Getting Started
+Современный веб-сайт-портфолио, демонстрирующий художественные работы с использованием передовых технологий веб-разработки.
 
-First, run the development server:
+## 🚀 Особенности
 
+- Интерактивные анимации с использованием GSAP
+- Плавные переходы между страницами
+- Адаптивный дизайн для всех устройств
+- Оптимизированная производительность
+- Современный UI/UX дизайн
+
+## 🛠 Технологии
+
+- Next.js 14
+- React 18
+- GSAP (GreenSock Animation Platform)
+- CSS Modules
+- Vite
+
+## 📦 Установка
+
+1. Клонируйте репозиторий:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/your-username/artistic-essence.git
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Установите зависимости:
+```bash
+cd artistic-essence
+npm install
+```
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+3. Запустите проект в режиме разработки:
+```bash
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🏗 Структура проекта
 
-## Learn More
+```
+artistic-essence/
+├── src/
+│   ├── app/              # Основные настройки приложения
+│   ├── components/       # React компоненты
+│   ├── data/            # Данные для компонентов
+│   ├── pages/           # Страницы приложения
+│   └── hooks/           # Пользовательские хуки
+├── public/              # Статические файлы
+└── package.json         # Зависимости и скрипты
+```
 
-To learn more about Next.js, take a look at the following resources:
+## 🎨 Компоненты
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Works
+Интерактивная галерея работ с анимированными переходами и эффектами при скролле.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Beauty
+Секция с фиксированным изображением и анимированным клип-патом.
 
-## Deploy on Vercel
+### ParallaxImg
+Компонент для создания эффекта параллакса на изображениях.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### CustomCursor
+Кастомный курсор с анимацией при наведении.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### MusicPlayer
+Музыкальный плеер с анимированными кнопками управления.
+
+## 🚀 Деплой
+
+Проект автоматически деплоится на GitHub Pages при пуше в ветку `main`.
+
+## 📝 Известные проблемы
+
+- [ ] Оптимизация анимаций в компоненте Works для мобильных устройств
+- [ ] Улучшение производительности при скролле
+- [ ] Исправление стики-пин в компоненте Beauty
+
+## 🤝 Вклад в проект
+
+1. Форкните репозиторий
+2. Создайте ветку для ваших изменений (`git checkout -b feature/amazing-feature`)
+3. Закоммитьте изменения (`git commit -m 'Add some amazing feature'`)
+4. Пушните в ветку (`git push origin feature/amazing-feature`)
+5. Откройте Pull Request
+
+## 📄 Лицензия
+
+MIT License - подробности в файле [LICENSE](LICENSE)
+
+## 👥 Авторы
+
+- Ваше имя - [@shigakori](https://github.com/shigakori)
