@@ -7,6 +7,9 @@ const nextConfig = {
     distDir: 'dist',
     basePath: '/artistic-essence',
     assetPrefix: '/artistic-essence/',
+    experimental: {
+        appDir: true
+    }
 };
 
 export default nextConfig;
