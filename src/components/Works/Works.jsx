@@ -2,7 +2,7 @@
 
 import './Works.css';
 import works from '@/data/works';
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Link from 'next/link';
@@ -15,74 +15,95 @@ export default function Works() {
     const slideImages = useRef(null);
     const titleElement = useRef(null);
     const exploreLink = useRef(null);
-    let firstSlideDOMElement = null; 
+    const [isMobile, setIsMobile] = useState(false);
+    let firstSlideDOMElement = null;
+
+    useEffect(() => {
+        // Проверяем, является ли устройство мобильным
+        const checkMobile = () => {
+            return window.innerWidth <= 768;
+        };
+        
+        setIsMobile(checkMobile());
+        
+        const handleResize = () => {
+            setIsMobile(checkMobile());
+        };
+        
+        window.addEventListener('resize', handleResize);
+        
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
 
     useEffect(() => {
         try {
+            if (!slideImages.current) return;
+
             const totalWorks = works.length;
-            const stripsCount = 16;
+            // Уменьшаем количество полос для мобильных устройств
+            const stripsCount = isMobile ? 8 : 16;
             let currentTitleIndex = 0;
             let queuedTitleIndex = null;
             const titleChangeThreshold = 0.5;
             let isAnimating = false;
             
-            if (!slideImages.current) return;
-            
             slideImages.current.innerHTML = "";
 
-            for (let i = 0; i < totalWorks; i++) {
-                if (i === 0) {
-                    const imgContainer = document.createElement('div');
-                    imgContainer.className = 'img'; 
-                    imgContainer.id = `img-${i + 1}`; 
-        
+            // Создаем первый слайд
+            if (totalWorks > 0) {
+                const imgContainer = document.createElement('div');
+                imgContainer.className = 'img';
+                imgContainer.id = 'img-1';
+
+                const img = document.createElement('img');
+                img.src = works[0].image;
+                img.alt = works[0].title;
+                img.loading = 'lazy';
+                img.style.transform = "scale(1.25)";
+
+                imgContainer.appendChild(img);
+                slideImages.current.appendChild(imgContainer);
+                firstSlideDOMElement = img;
+            }
+
+            // Создаем остальные слайды
+            for (let i = 1; i < totalWorks; i++) {
+                const imgContainer = document.createElement('div');
+                imgContainer.className = 'img-container';
+                imgContainer.id = `img-container-${i + 1}`;
+                imgContainer.style.opacity = '0';
+
+                for (let j = 0; j < stripsCount; j++) {
+                    const strip = document.createElement('div');
+                    strip.className = 'strip';
+
                     const img = document.createElement('img');
                     img.src = works[i].image;
                     img.alt = works[i].title;
+                    img.style.transform = 'scale(1.25)';
                     img.loading = 'lazy';
-                    img.style.transform = "scale(1.25)";
-        
-                    imgContainer.appendChild(img);
-                    slideImages.current.appendChild(imgContainer);
-                    firstSlideDOMElement = img; 
-                } else {
-                    const imgContainer = document.createElement('div');
-                    imgContainer.className = 'img-container';
-                    imgContainer.id = `img-container-${i + 1}`;
-                    imgContainer.style.opacity = '0';
-        
-                    for(let j = 0; j < stripsCount; j++) {
-                        const strip = document.createElement('div');
-                        strip.className = 'strip';
-        
-                        const img = document.createElement('img');
-                        img.src = works[i].image;
-                        img.alt = works[i].title;
-                        img.style.transform = 'scale(1.25)';
-                        img.loading = 'lazy';
-        
-                        const stripPositionFromBottom = stripsCount - j - 1;
-                        const stripLowerBound =
-                            (stripPositionFromBottom + 1) * (100 / stripsCount);
-                        const stripUpperBound = stripPositionFromBottom * (100 / stripsCount);
-        
-                        strip.style.clipPath = `polygon(0% ${stripLowerBound}%, 100% ${stripLowerBound}%, 100% ${stripUpperBound - .1}%, 0% ${stripUpperBound - .1}%)`;
-        
-                        strip.appendChild(img);
-                        imgContainer.appendChild(strip);
-                    }
-                    slideImages.current.appendChild(imgContainer);
+
+                    const stripPositionFromBottom = stripsCount - j - 1;
+                    const stripLowerBound = (stripPositionFromBottom + 1) * (100 / stripsCount);
+                    const stripUpperBound = stripPositionFromBottom * (100 / stripsCount);
+
+                    strip.style.clipPath = `polygon(0% ${stripLowerBound}%, 100% ${stripLowerBound}%, 100% ${stripUpperBound - .1}%, 0% ${stripUpperBound - .1}%)`;
+
+                    strip.appendChild(img);
+                    imgContainer.appendChild(strip);
                 }
+                slideImages.current.appendChild(imgContainer);
             }
 
+            // Оптимизируем параметры скролла для мобильных устройств
             const transitionCount = totalWorks - 1;
-            const scrollDistancePerTransition = 1000;
-            const initialScrollDelay = 300;
-            const finalScrollDelay = 300;
+            const scrollDistancePerTransition = isMobile ? 500 : 1000;
+            const initialScrollDelay = isMobile ? 150 : 300;
+            const finalScrollDelay = isMobile ? 150 : 300;
 
-            const totalScrollDistance =
-                transitionCount * scrollDistancePerTransition +
-                initialScrollDelay + finalScrollDelay;
+            const totalScrollDistance = transitionCount * scrollDistancePerTransition + initialScrollDelay + finalScrollDelay;
 
             const transitionRanges = [];
             let currentScrollPosition = initialScrollDelay;
@@ -102,48 +123,51 @@ export default function Works() {
                 currentScrollPosition = transitionEnd;
             }
 
-            function calculateImageProgress(scrollProgress){
+            function calculateImageProgress(scrollProgress) {
+                if (typeof scrollProgress !== 'number') return 0;
+                
                 let imageProgress = 0;
 
-                if (scrollProgress < transitionRanges[0].startPercent) {
+                if (scrollProgress < transitionRanges[0]?.startPercent) {
                     return 0;
                 }
 
-                if (scrollProgress > transitionRanges[transitionRanges.length - 1].endPercent){
+                if (scrollProgress > transitionRanges[transitionRanges.length - 1]?.endPercent) {
                     return transitionRanges.length;
                 }
 
                 for (let i = 0; i < transitionRanges.length; i++) {
                     const range = transitionRanges[i];
+                    if (!range) continue;
 
-                    if (scrollProgress >= range.startPercent && scrollProgress <= range.endPercent){
+                    if (scrollProgress >= range.startPercent && scrollProgress <= range.endPercent) {
                         const rangeSize = range.endPercent - range.startPercent;
-                        const normalizeProgress = 
-                            (scrollProgress - range.startPercent) / rangeSize;
+                        const normalizeProgress = (scrollProgress - range.startPercent) / rangeSize;
                         imageProgress = i + normalizeProgress;
                         break;
-                    } else if (scrollProgress > range.endPercent){
+                    } else if (scrollProgress > range.endPercent) {
                         imageProgress = i + 1;
                     }
                 }
 
                 return imageProgress;
             }
-            
-            function getScaleForImage(imageIndex, currentImageIndex, progress){
-                if(imageIndex > currentImageIndex) return 1.25;
+
+            function getScaleForImage(imageIndex, currentImageIndex, progress) {
+                if (typeof imageIndex !== 'number' || typeof currentImageIndex !== 'number' || typeof progress !== 'number') {
+                    return 1.25;
+                }
+
+                if (imageIndex > currentImageIndex) return 1.25;
                 if (imageIndex < currentImageIndex - 1) return 1;
 
-                let totalProgress = 
-                    imageIndex === currentImageIndex ? progress : 1 + progress;
+                let totalProgress = imageIndex === currentImageIndex ? progress : 1 + progress;
                 return 1.25 - (.25 * totalProgress) / 2;
             }
 
-            function animateTitleChange(index, direction){
-                if (index === currentTitleIndex) return;
-
+            function animateTitleChange(index, direction) {
+                if (typeof index !== 'number' || index === currentTitleIndex) return;
                 if (index < 0 || index >= works.length) return;
-
                 if (isAnimating) {
                     queuedTitleIndex = index;
                     return;
@@ -171,9 +195,9 @@ export default function Works() {
                         onComplete: () => {
                             if (titleElement.current) {
                                 titleElement.current.textContent = newTitle;
-                                gsap.set(titleElement.current, {y: inY });
+                                gsap.set(titleElement.current, { y: inY });
 
-                                gsap.to(titleElement.current,{
+                                gsap.to(titleElement.current, {
                                     y: '0%',
                                     duration: .5,
                                     ease: 'power3.inOut',
@@ -181,29 +205,28 @@ export default function Works() {
                                         currentTitleIndex = index;
                                         isAnimating = false;
 
-                                        if(
-                                            queuedTitleIndex !== null && 
-                                            queuedTitleIndex !== currentTitleIndex
-                                        ){
+                                        if (queuedTitleIndex !== null && queuedTitleIndex !== currentTitleIndex) {
                                             const nextIndex = queuedTitleIndex;
                                             queuedTitleIndex = null;
                                             animateTitleChange(nextIndex, direction);
                                         }
                                     }
-                                })
+                                });
                             }
                         }
-                    })
+                    });
                 } else {
                     isAnimating = false;
                 }
             }
 
-            function getTitleIndexForProgress(imageProgress){
+            function getTitleIndexForProgress(imageProgress) {
+                if (typeof imageProgress !== 'number') return 0;
+                
                 const imageIndex = Math.floor(imageProgress);
                 const imageSpecificProgress = imageProgress - imageIndex;
 
-                if (imageSpecificProgress >= titleChangeThreshold){
+                if (imageSpecificProgress >= titleChangeThreshold) {
                     return Math.min(imageIndex + 1, works.length - 1);
                 } else {
                     return imageIndex;
@@ -211,110 +234,112 @@ export default function Works() {
             }
 
             let lastImageProgress = 0;
+            let scrollTrigger = null;
 
-            ScrollTrigger.create({
-                trigger: '.works',
-                start: 'top top',
-                end: `+=${totalScrollDistance}vh`,
-                pin: true,
-                pinSpacing: true,
-                scrub: 0.5,
-                invalidateOnRefresh: true,
-                anticipatePin: 1,
-                fastScrollEnd: true,
+            try {
+                scrollTrigger = ScrollTrigger.create({
+                    trigger: '.works',
+                    start: 'top top',
+                    end: `+=${totalScrollDistance}vh`,
+                    pin: true,
+                    pinSpacing: true,
+                    scrub: isMobile ? 1 : 0.5,
+                    invalidateOnRefresh: true,
+                    anticipatePin: 1,
+                    fastScrollEnd: true,
+                    onUpdate: (self) => {
+                        try {
+                            const imageProgress = calculateImageProgress(self.progress);
 
-                onUpdate: (self) => {
-                    const imageProgress = calculateImageProgress(self.progress);
+                            if (typeof imageProgress === 'number') {
+                                const scrollDirection = imageProgress > lastImageProgress ? 'down' : 'up';
+                                const currentImageIndex = Math.floor(imageProgress);
+                                const imageSpecificProgress = imageProgress - currentImageIndex;
 
-                    if (typeof imageProgress === 'number') {
-                        const scrollDirection =
-                            imageProgress > lastImageProgress ? 'down' : 'up';
-                        const currentImageIndex = Math.floor(imageProgress);
-                        const imageSpecificProgress = imageProgress - currentImageIndex;
+                                const correctTitleIndex = getTitleIndexForProgress(imageProgress);
 
-                        const correctTitleIndex = getTitleIndexForProgress(imageProgress);
+                                if (correctTitleIndex !== currentTitleIndex) {
+                                    queuedTitleIndex = correctTitleIndex;
 
-                        if (correctTitleIndex !== currentTitleIndex){
-                            queuedTitleIndex = correctTitleIndex
+                                    if (!isAnimating) {
+                                        animateTitleChange(correctTitleIndex, scrollDirection);
+                                    }
+                                }
 
-                            if (!isAnimating){
-                                animateTitleChange(correctTitleIndex, scrollDirection);
+                                if (firstSlideDOMElement) {
+                                    const firstSlideImgScale = getScaleForImage(0, currentImageIndex, imageSpecificProgress);
+                                    firstSlideDOMElement.style.transform = `scale(${firstSlideImgScale})`;
+                                }
+
+                                for (let i = 1; i < totalWorks; i++) {
+                                    const imgContainer = document.getElementById(`img-container-${i + 1}`);
+                                    if (!imgContainer) continue;
+
+                                    imgContainer.style.opacity = '1';
+
+                                    const strips = imgContainer.querySelectorAll('.strip');
+                                    const images = imgContainer.querySelectorAll('img');
+
+                                    if (i < currentImageIndex - 1 || i > currentImageIndex + 1) {
+                                        strips.forEach((strip, stripIndex) => {
+                                            const stripPositionFromBottom = stripsCount - stripIndex - 1;
+                                            const stripUpperBound = stripPositionFromBottom * (100 / stripsCount);
+                                            const stripLowerBound = (stripPositionFromBottom + 1) * (100 / stripsCount);
+                                            strip.style.clipPath = `polygon(0% ${stripLowerBound}%, 100% ${stripLowerBound}%, 100% ${stripUpperBound - .1}%, 0% ${stripUpperBound - .1}%)`;
+                                        });
+                                    } else if (i === currentImageIndex) {
+                                        strips.forEach((strip, stripIndex) => {
+                                            const stripPositionFromBottom = stripsCount - stripIndex - 1;
+                                            const stripUpperBound = stripPositionFromBottom * (100 / stripsCount);
+                                            const stripLowerBound = (stripPositionFromBottom + 1) * (100 / stripsCount);
+                                            const stripDelay = (stripIndex / stripsCount) * (isMobile ? 0.3 : 0.5);
+                                            const adjustedProgress = Math.max(0, Math.min(1, (imageSpecificProgress - stripDelay) * 2));
+                                            const currentStripUpperBound = stripLowerBound - (stripLowerBound - (stripUpperBound - .1)) * adjustedProgress;
+                                            strip.style.clipPath = `polygon(0% ${stripLowerBound}%, 100% ${stripLowerBound}%, 100% ${currentStripUpperBound}%, 0% ${currentStripUpperBound}%)`;
+                                        });
+                                    } else {
+                                        strips.forEach((strip, stripIndex) => {
+                                            const stripPositionFromBottom = stripsCount - stripIndex - 1;
+                                            const stripLowerBound = (stripPositionFromBottom + 1) * (100 / stripsCount);
+                                            strip.style.clipPath = `polygon(0% ${stripLowerBound}%, 100% ${stripLowerBound}%, 100% ${stripLowerBound}%, 0% ${stripLowerBound}%)`;
+                                        });
+                                    }
+
+                                    const imgScale = getScaleForImage(i - 1, currentImageIndex, imageSpecificProgress);
+                                    images.forEach((img) => {
+                                        img.style.transform = `scale(${imgScale})`;
+                                    });
+                                }
+
+                                lastImageProgress = imageProgress;
                             }
+                        } catch (error) {
+                            console.error("Error in scroll update:", error);
                         }
-
-                        if (firstSlideDOMElement) {
-                            const firstSlideImgScale = getScaleForImage(
-                                0,
-                                currentImageIndex,
-                                imageSpecificProgress
-                            );
-                            firstSlideDOMElement.style.transform = `scale(${firstSlideImgScale})`;
-                        }
-
-                        for (let i = 1; i < totalWorks; i++){
-                            // Анимируем все слайды для корректной работы на мобильных устройствах
-                            const imgContainer = document.getElementById(`img-container-${i + 1}`);
-                            if (!imgContainer) continue;
-                            imgContainer.style.opacity = '1';
-
-                            const strips = imgContainer.querySelectorAll('.strip');
-                            const images = imgContainer.querySelectorAll('img');
-
-                            if (i < currentImageIndex - 1 || i > currentImageIndex + 1) {
-                                strips.forEach((strip, stripIndex) => {
-                                    const stripPositionFromBottom = stripsCount - stripIndex - 1;
-                                    const stripUpperBound = stripPositionFromBottom * (100 / stripsCount);
-                                    const stripLowerBound = (stripPositionFromBottom + 1) * (100 / stripsCount);
-                                    strip.style.clipPath = `polygon(0% ${stripLowerBound}%, 100% ${stripLowerBound}%, 100% ${stripUpperBound - .1}%, 0% ${stripUpperBound - .1}%)`;
-                                });
-                            } else if (i === currentImageIndex) {
-                                strips.forEach((strip, stripIndex) => {
-                                    const stripPositionFromBottom = stripsCount - stripIndex - 1;
-                                    const stripUpperBound = stripPositionFromBottom * (100 / stripsCount);
-                                    const stripLowerBound = (stripPositionFromBottom + 1) * (100 / stripsCount);
-                                    const stripDelay = (stripIndex / stripsCount) * .5;
-                                    const adjustedProgress = Math.max(0, Math.min(1, (imageSpecificProgress - stripDelay) * 2));
-                                    const currentStripUpperBound = stripLowerBound - (stripLowerBound - (stripUpperBound - .1)) * adjustedProgress;
-                                    strip.style.clipPath = `polygon(0% ${stripLowerBound}%, 100% ${stripLowerBound}%, 100% ${currentStripUpperBound}%, 0% ${currentStripUpperBound}%)`;
-                                });
-                            } else {
-                                strips.forEach((strip, stripIndex) => {
-                                    const stripPositionFromBottom = stripsCount - stripIndex - 1;
-                                    const stripLowerBound = (stripPositionFromBottom + 1) * (100 / stripsCount);
-                                    strip.style.clipPath = `polygon(0% ${stripLowerBound}%, 100% ${stripLowerBound}%, 100% ${stripLowerBound}%, 0% ${stripLowerBound}%)`;
-                                });
-                            }
-
-                            const imgScale = getScaleForImage(
-                                i - 1,
-                                currentImageIndex,
-                                imageSpecificProgress
-                            );
-                            images.forEach((img) => {
-                                img.style.transform = `scale(${imgScale})`;
-                            });
-                        }
-
-                        lastImageProgress = imageProgress;
-                    };
-                }
-            });
+                    }
+                });
+            } catch (error) {
+                console.error("Error creating ScrollTrigger:", error);
+            }
 
             return () => {
+                if (scrollTrigger) {
+                    scrollTrigger.kill();
+                }
                 ScrollTrigger.getAll().forEach(trigger => trigger.kill());
             };
         } catch (error) {
             console.error("Error in Works component:", error);
         }
-    }, []);
-    
+    }, [isMobile]);
+
     const handleExploreClick = (e) => {
         e.preventDefault();
         window.scrollTo(0, 0);
         startClosing('/projects');
     };
 
-    return(
+    return (
         <section className='works'>
             <div className='works__images' ref={slideImages}></div>
 
@@ -340,5 +365,5 @@ export default function Works() {
                 </div>
             </div>
         </section>
-    )
+    );
 }
