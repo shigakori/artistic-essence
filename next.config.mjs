@@ -4,7 +4,7 @@ const nextConfig = {
     images: {
         unoptimized: true,
     },
-    trailingSlash: true,
+    distDir: 'dist',
     basePath: '/artistic-essence',
     assetPrefix: '/artistic-essence/',
 };
