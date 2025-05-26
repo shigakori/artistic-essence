@@ -100,5 +100,4 @@ MIT License - подробности в файле [LICENSE](LICENSE)
 - Next.js команде за отличный фреймворк
 - Всем контрибьюторам проекта
 =======
-- Ваше имя - [@shigakori](https://github.com/shigakori)
->>>>>>> 06850616d53b0189128495264debe1d2dcdbcca9
+- [@shigakori](https://github.com/shigakori)
