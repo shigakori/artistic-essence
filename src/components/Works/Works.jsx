@@ -94,9 +94,9 @@ export default function Works() {
             }
 
             const transitionCount = totalWorks - 1;
-            const scrollDistancePerTransition = isMobile ? 300 : 800;
-            const initialScrollDelay = isMobile ? 100 : 200;
-            const finalScrollDelay = isMobile ? 100 : 200;
+            const scrollDistancePerTransition = 800;
+            const initialScrollDelay = 200;
+            const finalScrollDelay = 200;
 
             const totalScrollDistance = transitionCount * scrollDistancePerTransition + initialScrollDelay + finalScrollDelay;
 
@@ -238,11 +238,16 @@ export default function Works() {
                     end: `+=${totalScrollDistance}vh`,
                     pin: true,
                     pinSpacing: true,
-                    scrub: isMobile ? 0.5 : 0.3,
+                    scrub: 0.3,
                     invalidateOnRefresh: true,
                     anticipatePin: 1,
                     fastScrollEnd: true,
                     preventOverlaps: true,
+                    onUpdate: (self) => {
+                        if (self.direction === 1 && self.progress === 1) {
+                            gsap.set(slideImages.current, { clearProps: "all" });
+                        }
+                    },
                     onEnter: () => {
                         gsap.set(slideImages.current, { clearProps: "all" });
                     },
@@ -288,7 +293,9 @@ export default function Works() {
                                             const stripUpperBound = stripPositionFromBottom * (100 / stripsCount);
                                             const stripLowerBound = (stripPositionFromBottom + 1) * (100 / stripsCount);
                                             gsap.set(strip, {
-                                                clipPath: `polygon(0% ${stripLowerBound}%, 100% ${stripLowerBound}%, 100% ${stripUpperBound - .1}%, 0% ${stripUpperBound - .1}%)`
+                                                clipPath: `polygon(0% ${stripLowerBound}%, 100% ${stripLowerBound}%, 100% ${stripUpperBound - .1}%, 0% ${stripUpperBound - .1}%)`,
+                                                force3D: true,
+                                                willChange: "clip-path"
                                             });
                                         });
                                     } else if (i === currentImageIndex) {
@@ -296,11 +303,13 @@ export default function Works() {
                                             const stripPositionFromBottom = stripsCount - stripIndex - 1;
                                             const stripUpperBound = stripPositionFromBottom * (100 / stripsCount);
                                             const stripLowerBound = (stripPositionFromBottom + 1) * (100 / stripsCount);
-                                            const stripDelay = (stripIndex / stripsCount) * (isMobile ? 0.3 : 0.5);
+                                            const stripDelay = (stripIndex / stripsCount) * 0.5;
                                             const adjustedProgress = Math.max(0, Math.min(1, (imageSpecificProgress - stripDelay) * 2));
                                             const currentStripUpperBound = stripLowerBound - (stripLowerBound - (stripUpperBound - .1)) * adjustedProgress;
                                             gsap.set(strip, {
-                                                clipPath: `polygon(0% ${stripLowerBound}%, 100% ${stripLowerBound}%, 100% ${currentStripUpperBound}%, 0% ${currentStripUpperBound}%)`
+                                                clipPath: `polygon(0% ${stripLowerBound}%, 100% ${stripLowerBound}%, 100% ${currentStripUpperBound}%, 0% ${currentStripUpperBound}%)`,
+                                                force3D: true,
+                                                willChange: "clip-path"
                                             });
                                         });
                                     } else {
@@ -308,14 +317,20 @@ export default function Works() {
                                             const stripPositionFromBottom = stripsCount - stripIndex - 1;
                                             const stripLowerBound = (stripPositionFromBottom + 1) * (100 / stripsCount);
                                             gsap.set(strip, {
-                                                clipPath: `polygon(0% ${stripLowerBound}%, 100% ${stripLowerBound}%, 100% ${stripLowerBound}%, 0% ${stripLowerBound}%)`
+                                                clipPath: `polygon(0% ${stripLowerBound}%, 100% ${stripLowerBound}%, 100% ${stripLowerBound}%, 0% ${stripLowerBound}%)`,
+                                                force3D: true,
+                                                willChange: "clip-path"
                                             });
                                         });
                                     }
 
                                     const imgScale = getScaleForImage(i - 1, currentImageIndex, imageSpecificProgress);
                                     images.forEach((img) => {
-                                        gsap.set(img, { transform: `scale(${imgScale})` });
+                                        gsap.set(img, { 
+                                            transform: `scale(${imgScale})`,
+                                            force3D: true,
+                                            willChange: "transform"
+                                        });
                                     });
                                 }
 

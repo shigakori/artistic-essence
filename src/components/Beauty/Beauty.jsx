@@ -15,7 +15,7 @@ const Beauty = () => {
         gsap.registerPlugin(ScrollTrigger);
 
         const stickySection = sectionRef.current;
-        const totalStickyHeight = window.innerHeight * 1.2;
+        const totalStickyHeight = window.innerHeight * 2;
 
         ScrollTrigger.create({
             trigger: stickySection,
@@ -25,7 +25,13 @@ const Beauty = () => {
             pinSpacing: true,
             anticipatePin: 1,
             fastScrollEnd: true,
-            invalidateOnRefresh: true
+            invalidateOnRefresh: true,
+            onEnter: () => {
+                gsap.set(stickySection, { clearProps: "all" });
+            },
+            onLeaveBack: () => {
+                gsap.set(stickySection, { clearProps: "all" });
+            }
         });
 
         gsap.to(img2ImgRef.current, {
