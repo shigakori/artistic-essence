@@ -15,11 +15,11 @@ export default function Works() {
     const slideImages = useRef(null);
     const titleElement = useRef(null);
     const exploreLink = useRef(null);
-    let firstSlideDOMElement = null; // Для хранения ссылки на DOM-элемент первого слайда
+    let firstSlideDOMElement = null;
 
     useEffect(() => {
         const totalWorks = works.length;
-        const stripsCount = 16;
+        const stripsCount = window.innerWidth <= 768 ? 8 : 16;
         let currentTitleIndex = 0;
         let queuedTitleIndex = null;
         const titleChangeThreshold = 0.5;
@@ -27,28 +27,24 @@ export default function Works() {
         
         if (!slideImages.current) return;
         
-        // Безопасно очищаем контейнер
         slideImages.current.innerHTML = "";
 
         for (let i = 0; i < totalWorks; i++) {
             if (i === 0) {
-                // Создаем первый слайд (без strips)
                 const imgContainer = document.createElement('div');
-                imgContainer.className = 'img'; // Используем класс 'img'
-                imgContainer.id = `img-${i + 1}`; // id будет 'img-1'
+                imgContainer.className = 'img';
+                imgContainer.id = `img-${i + 1}`;
     
                 const img = document.createElement('img');
-                img.src = works[i].image; // Используем slides[0].image
+                img.src = works[i].image;
                 img.alt = works[i].title;
                 img.loading = 'lazy';
-                // Стили для первого изображения
                 img.style.transform = "scale(1.25)";
     
                 imgContainer.appendChild(img);
                 slideImages.current.appendChild(imgContainer);
-                firstSlideDOMElement = img; // Сохраняем ссылку на сам <img> тег
+                firstSlideDOMElement = img;
             } else {
-                // Создаем остальные слайды (со strips)
                 const imgContainer = document.createElement('div');
                 imgContainer.className = 'img-container';
                 imgContainer.id = `img-container-${i + 1}`;
@@ -79,9 +75,9 @@ export default function Works() {
         }
 
         const transitionCount = totalWorks - 1;
-        const scrollDistancePerTransition = 1000;
-        const initialScrollDelay = 300;
-        const finalScrollDelay = 300;
+        const scrollDistancePerTransition = window.innerWidth <= 768 ? 500 : 1000;
+        const initialScrollDelay = window.innerWidth <= 768 ? 150 : 300;
+        const finalScrollDelay = window.innerWidth <= 768 ? 150 : 300;
 
         const totalScrollDistance =
             transitionCount * scrollDistancePerTransition +
@@ -221,7 +217,7 @@ export default function Works() {
             end: `+=${totalScrollDistance}vh`,
             pin: true,
             pinSpacing: true,
-            scrub: 0.5,
+            scrub: window.innerWidth <= 768 ? 1 : 0.5,
             invalidateOnRefresh: true,
             anticipatePin: 1,
             fastScrollEnd: true,
@@ -255,7 +251,6 @@ export default function Works() {
                     }
 
                     for (let i = 1; i < totalWorks; i++){
-                        // Оптимизация: анимируем только текущий и предыдущий слайды
                         if (i < currentImageIndex - 1 || i > currentImageIndex + 1) {
                             const imgContainer = document.getElementById(`img-container-${i + 1}`);
                             if (imgContainer) imgContainer.style.opacity = '0';
@@ -288,7 +283,7 @@ export default function Works() {
                                 const stripPositionFromBottom = stripsCount - stripIndex - 1;
                                 const stripUpperBound = stripPositionFromBottom * (100 / stripsCount);
                                 const stripLowerBound = (stripPositionFromBottom + 1) * (100 / stripsCount);
-                                const stripDelay = (stripIndex / stripsCount) * .5;
+                                const stripDelay = (stripIndex / stripsCount) * (window.innerWidth <= 768 ? 0.3 : 0.5);
                                 const adjustedProgress = Math.max(0, Math.min(1, (imageSpecificProgress - stripDelay) * 2));
                                 const currentStripUpperBound = stripLowerBound - (stripLowerBound - (stripUpperBound - .1)) * adjustedProgress;
                                 strip.style.clipPath = `polygon(0% ${stripLowerBound}%, 100% ${stripLowerBound}%, 100% ${currentStripUpperBound}%, 0% ${currentStripUpperBound}%)`;
@@ -316,7 +311,6 @@ export default function Works() {
             }
         });
 
-        // В конце useEffect:
         return () => {
             ScrollTrigger.getAll().forEach(trigger => trigger.kill());
         };
