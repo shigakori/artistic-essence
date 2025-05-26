@@ -15,7 +15,7 @@ const Beauty = () => {
         gsap.registerPlugin(ScrollTrigger);
 
         const stickySection = sectionRef.current;
-        const totalStickyHeight = window.innerHeight * 2;
+        const totalStickyHeight = window.innerHeight * 1.5;
 
         ScrollTrigger.create({
             trigger: stickySection,
@@ -23,8 +23,8 @@ const Beauty = () => {
             end: () => `+=${totalStickyHeight}`,
             pin: true,
             pinSpacing: true,
-            anticipatePin: 1,
-            fastScrollEnd: true,
+            anticipatePin: 0,
+            fastScrollEnd: false,
             invalidateOnRefresh: true,
             onEnter: () => {
                 gsap.set(stickySection, { clearProps: "all" });

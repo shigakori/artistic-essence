@@ -94,9 +94,9 @@ export default function Works() {
             }
 
             const transitionCount = totalWorks - 1;
-            const scrollDistancePerTransition = 800;
-            const initialScrollDelay = 200;
-            const finalScrollDelay = 200;
+            const scrollDistancePerTransition = 600;
+            const initialScrollDelay = 150;
+            const finalScrollDelay = 150;
 
             const totalScrollDistance = transitionCount * scrollDistancePerTransition + initialScrollDelay + finalScrollDelay;
 
@@ -238,9 +238,8 @@ export default function Works() {
                     end: `+=${totalScrollDistance}vh`,
                     pin: true,
                     pinSpacing: true,
-                    scrub: 0.3,
-                    invalidateOnRefresh: true,
-                    anticipatePin: 1,
+                    scrub: 0.2,
+                    anticipatePin: 0,
                     fastScrollEnd: true,
                     preventOverlaps: true,
                     onUpdate: (self) => {
@@ -303,7 +302,7 @@ export default function Works() {
                                             const stripPositionFromBottom = stripsCount - stripIndex - 1;
                                             const stripUpperBound = stripPositionFromBottom * (100 / stripsCount);
                                             const stripLowerBound = (stripPositionFromBottom + 1) * (100 / stripsCount);
-                                            const stripDelay = (stripIndex / stripsCount) * 0.5;
+                                            const stripDelay = (stripIndex / stripsCount) * 0.3;
                                             const adjustedProgress = Math.max(0, Math.min(1, (imageSpecificProgress - stripDelay) * 2));
                                             const currentStripUpperBound = stripLowerBound - (stripLowerBound - (stripUpperBound - .1)) * adjustedProgress;
                                             gsap.set(strip, {
