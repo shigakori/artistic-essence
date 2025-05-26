@@ -15,7 +15,7 @@ const Beauty = () => {
         gsap.registerPlugin(ScrollTrigger);
 
         const stickySection = sectionRef.current;
-        const totalStickyHeight = window.innerHeight * 1.5;
+        const totalStickyHeight = window.innerHeight * 1.2;
 
         ScrollTrigger.create({
             trigger: stickySection,
@@ -23,15 +23,9 @@ const Beauty = () => {
             end: () => `+=${totalStickyHeight}`,
             pin: true,
             pinSpacing: true,
-            anticipatePin: 0,
-            fastScrollEnd: false,
-            invalidateOnRefresh: true,
-            onEnter: () => {
-                gsap.set(stickySection, { clearProps: "all" });
-            },
-            onLeaveBack: () => {
-                gsap.set(stickySection, { clearProps: "all" });
-            }
+            anticipatePin: 1,
+            fastScrollEnd: true,
+            invalidateOnRefresh: true
         });
 
         gsap.to(img2ImgRef.current, {
@@ -41,7 +35,7 @@ const Beauty = () => {
                 trigger: stickySection,
                 start: 'top top',
                 end: () => `+=${window.innerHeight}`,
-                scrub: true,
+                scrub: true
             }
         });
 
@@ -87,6 +81,7 @@ const Beauty = () => {
                     alt="Artistic Essence Gallery Preview"
                     className="beauty__pin-img"
                     scale={1.7}
+                    ref={img2ImgRef}
                 />
             </div>
             <div className="beauty__intro">
