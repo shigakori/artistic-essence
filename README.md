@@ -91,6 +91,5 @@ MIT License - подробности в файле [LICENSE](LICENSE)
 
 ## 👥 Авторы
 
-<<<<<<< HEAD
 
 - [@shigakori](https://github.com/shigakori)
